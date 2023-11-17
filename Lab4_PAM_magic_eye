@@ -1,0 +1,66 @@
+.nolist
+.include "m16def.inc"
+.list
+.listmac
+.device ATmega16
+
+.cseg
+.org 0x0000
+jmp START
+
+.org 0x0030
+START:
+; stack setting
+ldi r16, 0x04
+out SPH, r16
+ldi r16, 0x5F
+out SPL, r16
+
+; set port B as ouput
+ldi r16, 0b11111111
+out DDRB, r16
+
+MAIN:
+
+ldi r16, 0b11111101
+out PORTB, r16
+call DELAY
+
+ldi r16, 0b11110111
+out PORTB, r16
+call DELAY
+
+ldi r16, 0b11011111
+out PORTB, r16
+call DELAY
+
+ldi r16, 0b01111111
+out PORTB, r16
+call DELAY
+
+ldi r16, 0b11011111
+out PORTB, r16
+call DELAY
+
+ldi r16, 0b11110111
+out PORTB, r16
+call DELAY
+
+ldi r16, 0b11111101
+out PORTB, r16
+call DELAY
+
+jmp MAIN
+
+.org 0x0100
+DELAY:
+    ldi  r18, 21
+    ldi  r19, 75
+    ldi  r20, 190
+L1: dec  r20
+    brne L1
+    dec  r19
+    brne L1
+    dec  r18
+    brne L1
+ret
