@@ -1,0 +1,153 @@
+.nolist
+.include "m16def.inc"
+.list
+.listmac
+.device ATmega16
+
+.equ c_0 = 0b11000000
+.equ c_1 = 0b11111001
+.equ c_2 = 0b10100100
+.equ c_3 = 0b10110000
+.equ c_4 = 0b10011001
+.equ c_5 = 0b10010010
+.equ c_6 = 0b10000010
+.equ c_7 = 0b11111000
+.equ c_8 = 0b10000000
+.equ c_9 = 0b10010000
+.equ c_A = 0b10001000
+.equ c_B = 0b10000011
+.equ c_C = 0b11000110
+.equ c_D = 0b10100001
+.equ c_E = 0b10000110
+.equ c_F = 0b10001110
+.equ c_H = 0b10001001
+.equ c_L = 0b11000111
+.equ c_P = 0b10001100
+
+.cseg
+.org 0x0000
+jmp START
+
+.org 0x0030
+START:
+; stack setting
+ldi r16, 0x04
+out SPH, r16
+ldi r16, 0x5F
+out SPL, r16
+
+; set port B as ouput
+ldi r16, 0b11111111
+out DDRB, r16
+; set port A as ouput
+out DDRA, r16
+
+MAIN:
+ldi r16,c_0
+out PORTB, r16
+ldi r16, 0b11111110
+out PORTA, r16
+call DELAY
+
+ldi r16,c_1
+out PORTB, r16
+ldi r16, 0b11111101
+out PORTA, r16
+call DELAY
+
+ldi r16,c_2
+out PORTB, r16
+ldi r16, 0b11111011
+out PORTA, r16
+call DELAY
+
+ldi r16,c_3
+out PORTB, r16
+ldi r16, 0b11110111
+out PORTA, r16
+call DELAY
+
+ldi r16,c_4
+out PORTB, r16
+ldi r16, 0b11111110
+out PORTA, r16
+call DELAY
+
+ldi r16,c_5
+out PORTB, r16
+ldi r16, 0b11111101
+out PORTA, r16
+call DELAY
+
+ldi r16,c_6
+out PORTB, r16
+ldi r16, 0b11111011
+out PORTA, r16
+call DELAY
+
+ldi r16,c_7
+out PORTB, r16
+ldi r16, 0b11110111
+out PORTA, r16
+call DELAY
+
+ldi r16,c_8
+out PORTB, r16
+ldi r16, 0b11111110
+out PORTA, r16
+call DELAY
+
+ldi r16,c_9
+out PORTB, r16
+ldi r16, 0b11111101
+out PORTA, r16
+call DELAY
+
+ldi r16,c_H
+out PORTB, r16
+ldi r16, 0b11111110
+out PORTA, r16
+call DELAY
+
+ldi r16,c_E
+out PORTB, r16
+ldi r16, 0b11111101
+out PORTA, r16
+call DELAY
+
+ldi r16,c_L
+out PORTB, r16
+ldi r16, 0b11111011
+out PORTA, r16
+call DELAY
+
+ldi r16,c_P
+out PORTB, r16
+ldi r16, 0b11110111
+out PORTA, r16
+call DELAY
+
+jmp MAIN
+
+.org 0x0100
+DELAY:
+    ldi  r18, 21
+    ldi  r19, 75
+    ldi  r20, 190
+L1: dec  r20
+    brne L1
+    dec  r19
+    brne L1
+    dec  r18
+    brne L1
+ret
+
+
+DELAY_SHORT:
+    ldi  r18, 52
+    ldi  r19, 241
+L2: dec  r19
+    brne L2
+    dec  r18
+    brne L2
+ret
